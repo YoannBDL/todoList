@@ -10,4 +10,4 @@ var todoList = {
 }
 
 
-var li = document.createElement(<li>Cheese</li>);
+var li = document.createElement(li);

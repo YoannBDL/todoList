@@ -3,7 +3,7 @@ html, body {height: 100%;}
 body {
 display: grid;
 grid-template-columns: 20% auto 20%;
-grid-template-rows: 13% auto 100px;
+grid-template-rows: minmax(120px, 13%) 100px 20px auto 100px;
 
 
 background-color: #416494;
@@ -25,11 +25,47 @@ h1 {
     text-shadow: 4px 3px 0 rgba(37, 36, 36, 0.781);
 }
 
+.main-top, .main-top-separator, .main {
+    border-color: gray;
+}
+
+.main-top {
+    grid-column: 2 / 3;
+    grid-row: 2 / 3;
+    background-color: rgb(243, 73, 73);
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    display: grid;
+    justify-content: space-around;
+    grid-template-rows: 1fr;
+}
+
+.main-top svg {
+    width: 30px;
+    margin-top: -41px;
+}
+
+svg.right {
+    grid-column: 1/2;
+}
+
+svg.left {
+    grid-column: 2/3;
+    
+}
+
+.main-top-separator {
+    grid-column: 2 / 3;
+    grid-row: 3 / 4;
+    background-color: rgb(189, 189, 189);
+
+}
 
 .main {
     grid-column: 2 / 3;
-    grid-row: 2 / 3;
+    grid-row: 4 / 5;
     background-color: white;
-    border-radius: 15px;
-    border: solid 7px rgba(3, 131, 253, 0.49);
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+
 }
