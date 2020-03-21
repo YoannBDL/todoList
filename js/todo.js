@@ -8,18 +8,16 @@ var todoList = {
 
     showTodos: function () {
         var ul = document.querySelector('ul');
-        var id = 0;
         ul.innerHTML = '';
-        this.taskList.forEach(todo => {
+        for (let i=0; i<this.taskList.length; i++){
             let task = document.createElement('li');
             let check = document.createElement('input');
             task.appendChild(check).setAttribute("type", "checkbox");
-            check.checked = todo.done;
-            task.id = id;
-            task.insertAdjacentText('beforeend', todo.text);
+            check.checked = this.taskList[i].done;
+            task.id = i;
+            task.insertAdjacentText('beforeend', this.taskList[i].text);
             ul.appendChild(task);
-            id += 1;
-        });
+        };
     },
 
     addTodo: function(text) {
@@ -69,7 +67,12 @@ var handlers = {
     },
 
     toggleCompleted: function(){
-        
+        var tasks = document.querySelector('ul');
+        tasks.addEventListener('click', function(todo){
+            if (todo.target.tagName === 'li'){
+                alert('ok!');
+            }
+        }, false)
     },
 
 
