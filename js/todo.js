@@ -6,43 +6,25 @@ var todoList = {
         {text: "Ceci est ma troisième tache", done:false},
     ],
 
-    showTodos: function () {
-        var ul = document.querySelector('ul');
-        ul.innerHTML = '';
-        for (let i=0; i<this.taskList.length; i++){
-            let task = document.createElement('li');
-            let check = document.createElement('input');
-            task.appendChild(check).setAttribute("type", "checkbox");
-            check.checked = this.taskList[i].done;
-            task.id = i;
-            task.insertAdjacentText('beforeend', this.taskList[i].text);
-            ul.appendChild(task);
-        };
-    },
-
     addTodo: function(text) {
         let task = {text: text, done: false};
         this.taskList.push(task);
-        this.showTodos();
     },
 
     changeTodo: function(id, newText) {
         this.taskList[id].text = newText;
-        this.showTodos();
+        view.showTodos();
     },
 
     delTodo: function(id) {
         this.taskList.splice(id, 1);
-        this.showTodos();
     },
 
     toggleCompleted: function(id) {
         this.taskList[id].done = !this.taskList[id].done;
-        this.showTodos();
     },
 
     toggleAll: function() {
-
         let i = 0;
         this.taskList.forEach(todo => {
             if (todo.done === true){i++}
@@ -50,9 +32,66 @@ var todoList = {
         this.taskList.forEach(todo => {
             todo.done = i !== this.taskList.length ? true : false;
         });
-        this.showTodos();
+        view.showTodos();
     }
+}
 
+var view = {
+
+    showTodos: function () {
+        var ul = document.querySelector('ul');
+        ul.innerHTML = '';
+        for (let i=0; i<todoList.taskList.length; i++){
+            let task = document.createElement('li');
+            let check = document.createElement('input');
+            task.appendChild(check).setAttribute("type", "checkbox");
+            check.className = 'check-task-button';
+            check.checked = todoList.taskList[i].done;
+            task.id = i;
+            task.insertAdjacentText('beforeend', todoList.taskList[i].text);
+            task.appendChild(this.createDeleteButton());
+            ul.appendChild(task);
+        };
+
+    },
+
+    createDeleteButton: function() {
+        var deleteButton = document.createElement('Button');
+        deleteButton.textContent = 'Delete';
+        deleteButton.className = 'deleteButton';
+        return deleteButton;
+
+    },
+
+    setUpEventListeners: function() {
+        var todosUl = document.querySelector('.main');
+        todosUl.addEventListener('click', function(event) {
+            // Get the element thas was clicked on
+            var elementClicked = event.target;
+
+            //Check on class names
+            switch (elementClicked.className) {
+                case 'deleteButton':
+                    handlers.delTodo(parseInt(elementClicked.parentNode.id));
+                    break;
+
+                case 'check-task-button' :
+                    handlers.toggleCompleted(parseInt(elementClicked.parentNode.id));
+                    break;
+                    
+                case 'check-all-tasks-button' :
+                    handlers.toggleAll();
+                    break;
+
+                case 'add-task-button' :
+                    handlers.addTodo();
+                    break;
+
+                    
+            }
+
+        });
+    }
 
 }
 
@@ -63,26 +102,25 @@ var handlers = {
         if (addTodoTextInput.value) {
             todoList.addTodo(addTodoTextInput.value);
             addTodoTextInput.value = '';
+            view.showTodos();
         }
     },
 
-    toggleCompleted: function(){
-        var tasks = document.querySelector('ul');
-        tasks.addEventListener('click', function(todo){
-            if (todo.target.tagName === 'li'){
-                alert('ok!');
-            }
-        }, false)
+    delTodo: function(id){
+        todoList.delTodo(id);
+        view.showTodos();
     },
 
+    toggleCompleted: function(id) {
+        todoList.toggleCompleted(id);
+        view.showTodos();
+    },
 
     toggleAll: function(){
         todoList.toggleAll();
     }
 
-
-
 }
 
-
-todoList.showTodos();
+view.showTodos();
+view.setUpEventListeners();
