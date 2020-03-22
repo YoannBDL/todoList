@@ -44,12 +44,16 @@ var view = {
         for (let i=0; i<todoList.taskList.length; i++){
             let task = document.createElement('li');
             let check = document.createElement('input');
+            let altDel = document.createElement('i');
+            altDel.className = 'far fa-trash-alt';
             task.appendChild(check).setAttribute("type", "checkbox");
             check.className = 'check-task-button';
             check.checked = todoList.taskList[i].done;
             task.id = i;
+            check.id = i;
             task.insertAdjacentText('beforeend', todoList.taskList[i].text);
             task.appendChild(this.createDeleteButton());
+            task.appendChild(altDel);
             ul.appendChild(task);
         };
 
