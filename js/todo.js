@@ -76,9 +76,6 @@ var view = {
                     break;  
                 case 'check-all-tasks-button' :
                     handlers.toggleAll();
-                    break;
-                case 'add-task-button' :
-                    handlers.addTodo();
                     break;       
             }
             // Check on data-selector values
@@ -86,6 +83,9 @@ var view = {
                 case 'delete-button' :
                     handlers.delTodo(parseInt(elementClicked.parentNode.id));
                     break;
+                case 'add-task-button' :
+                    handlers.addTodo();
+                    break
             }
 
             
