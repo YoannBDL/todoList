@@ -8,7 +8,7 @@ var todoList = {
 
     addTodo: function(text) {
         let task = {text: text, done: false};
-        this.taskList.push(task);
+        this.taskList.unshift(task);
     },
 
     changeTodo: function(id, newText) {
