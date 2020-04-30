@@ -20,6 +20,11 @@ var todoList = {
         this.taskList.splice(id, 1);
     },
 
+    delAllTodos: function () {
+        this.taskList = [];
+
+    },
+
     toggleCompleted: function(id) {
         this.taskList[id].done = !this.taskList[id].done;
     },
@@ -66,7 +71,7 @@ var view = {
     toggleDeleteAllButton: function() {
         var deleteAllButton = document.querySelector('.main .check-all i ');
         let isMultipleCheck = todoList.taskList.map(task => task.done).filter(value => value === true).length;
-        deleteAllButton.style.visibility = (isMultipleCheck > 1 ? 'visible' : 'hidden');
+        deleteAllButton.style.visibility = (isMultipleCheck === todoList.taskList.length ? 'visible' : 'hidden');
     },
 
     toggleCheckAll: function() {
@@ -100,6 +105,9 @@ var view = {
                 case 'delete-button' :
                     handlers.delTodo(parseInt(elementClicked.parentNode.id));
                     break;
+                case 'delete-all-button' :
+                    handlers.delAllTodos();
+                break;
                 case 'add-task-button' :
                     handlers.addTodo();
                     break
@@ -125,6 +133,12 @@ var handlers = {
 
     delTodo: function(id){
         todoList.delTodo(id);
+        view.showTodos();
+    },
+
+    delAllTodos: function(){
+        todoList.delAllTodos();
+        view.toggleCheckAll();
         view.showTodos();
     },
 
