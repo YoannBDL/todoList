@@ -57,10 +57,27 @@ var view = {
 
     createDeleteButton: function() {
         var deleteButton = document.createElement('i');
-        deleteButton.className = 'far fa-trash-alt';
+        deleteButton.className = 'far fa-times-circle';
         deleteButton.setAttribute('data-selector', 'delete-button');
         return deleteButton;
 
+    },
+
+    toggleDeleteAllButton: function() {
+        var deleteAllButton = document.querySelector('.main .check-all i ');
+        let isMultipleCheck = todoList.taskList.map(task => task.done).filter(value => value === true).length;
+        deleteAllButton.style.visibility = (isMultipleCheck > 1 ? 'visible' : 'hidden');
+    },
+
+    toggleCheckAll: function() {
+        var checkAllButton = document.querySelector('.check-all-tasks-button');
+        let isAllChecked = todoList.taskList.map(task => task.done).includes(false);
+        if (isAllChecked) {
+            checkAllButton.checked = false;
+        }
+        else {
+            checkAllButton.checked = true;
+        }
     },
 
     setUpEventListeners: function() {
@@ -113,11 +130,14 @@ var handlers = {
 
     toggleCompleted: function(id) {
         todoList.toggleCompleted(id);
+        view.toggleCheckAll();
+        view.toggleDeleteAllButton();
         view.showTodos();
     },
 
     toggleAll: function(){
         todoList.toggleAll();
+        view.toggleDeleteAllButton();
     }
 
 }

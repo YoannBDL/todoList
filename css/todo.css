@@ -106,7 +106,7 @@ svg.left {grid-column: 2/3;}
     align-items: center;
 }
 
-.main .check-all button {
+.main .check-all i fa-trash-alt{
     margin-left: auto;
 }
 
@@ -131,12 +131,12 @@ svg.left {grid-column: 2/3;}
     background-color: #e0e0e0;
 }
 
-.main ul li i {
+.main ul li i, .main .check-all i {
     font-size: 25px;
     color: gray;
     margin-left: auto;
     cursor: pointer;
 }
-.main ul li i:hover {
+.main ul li i:hover, .main .check-all i:hover {
     color: #f34949;
 }
