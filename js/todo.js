@@ -6,6 +6,7 @@ var todoList = {
         {text: "Ceci est ma troisième tache", done:false},
     ],
 
+
     addTodo: function(text) {
         let task = {text: text, done: false};
         this.taskList.unshift(task);
@@ -20,9 +21,8 @@ var todoList = {
         this.taskList.splice(id, 1);
     },
 
-    delAllTodos: function () {
-        this.taskList = [];
-
+    delComplete: function () {
+        this.taskList = this.taskList.filter( task => task.done === false);
     },
 
     toggleCompleted: function(id) {
@@ -68,10 +68,10 @@ var view = {
 
     },
 
-    toggleDeleteAllButton: function() {
-        var deleteAllButton = document.querySelector('.main .check-all i ');
-        let isMultipleCheck = todoList.taskList.map(task => task.done).filter(value => value === true).length;
-        deleteAllButton.style.visibility = (isMultipleCheck === todoList.taskList.length ? 'visible' : 'hidden');
+    delComplete: function() {
+        let checkAllButton = document.querySelector('.check-all-tasks-button');
+        checkAllButton.checked = false;
+        todoList.delComplete();
     },
 
     toggleCheckAll: function() {
@@ -106,7 +106,7 @@ var view = {
                     handlers.delTodo(parseInt(elementClicked.parentNode.id));
                     break;
                 case 'delete-all-button' :
-                    handlers.delAllTodos();
+                    handlers.delComplete();
                 break;
                 case 'add-task-button' :
                     handlers.addTodo();
@@ -136,22 +136,19 @@ var handlers = {
         view.showTodos();
     },
 
-    delAllTodos: function(){
-        todoList.delAllTodos();
-        view.toggleCheckAll();
+    delComplete: function(){
+        view.delComplete();
         view.showTodos();
     },
 
     toggleCompleted: function(id) {
         todoList.toggleCompleted(id);
         view.toggleCheckAll();
-        view.toggleDeleteAllButton();
         view.showTodos();
     },
 
     toggleAll: function(){
         todoList.toggleAll();
-        view.toggleDeleteAllButton();
     }
 
 }
