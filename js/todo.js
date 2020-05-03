@@ -46,17 +46,19 @@ var view = {
     showTodos: function () {
         var ul = document.querySelector('ul');
         ul.innerHTML = '';
-        for (let i=0; i<todoList.taskList.length; i++){
-            let task = document.createElement('li');
-            let check = document.createElement('input');
-            task.appendChild(check).setAttribute("type", "checkbox");
-            check.className = 'check-task-button';
-            check.checked = todoList.taskList[i].done;
-            task.id = i;
-            task.insertAdjacentText('beforeend', todoList.taskList[i].text);
-            task.appendChild(this.createDeleteButton());
-            ul.appendChild(task);
-        };
+        todoList.taskList.forEach(
+            function(current, index){
+                let task = document.createElement('li');
+                let check = document.createElement('input');
+                task.appendChild(check).setAttribute("type", "checkbox");
+                check.className = 'check-task-button';
+                check.checked = current.done;
+                task.id = index;
+                task.insertAdjacentText('beforeend', current.text);
+                task.appendChild(this.createDeleteButton());
+                ul.appendChild(task);
+            }, this
+        );
 
     },
 
@@ -112,9 +114,12 @@ var view = {
                     handlers.addTodo();
                     break
             }
+        });
 
-            
-
+        todosUl.addEventListener('keypress', function(key_pressed){
+            if (key_pressed.key === 'Enter'){
+                handlers.addTodo();
+            }
         });
     }
 
