@@ -77,14 +77,16 @@ var view = {
     },
 
     toggleCheckAll: function() {
-        var checkAllButton = document.querySelector('.check-all-tasks-button');
+        let checkAllButton = document.querySelector('.check-all-tasks-button');
         let isAllChecked = todoList.taskList.map(task => task.done).includes(false);
-        if (isAllChecked) {
-            checkAllButton.checked = false;
-        }
-        else {
-            checkAllButton.checked = true;
-        }
+        checkAllButton.checked = (isAllChecked ? false : true);
+
+        // if (isAllChecked) {
+        //     checkAllButton.checked = false;
+        // }
+        // else {
+        //     checkAllButton.checked = true;
+        // }
     },
 
     setUpEventListeners: function() {
