@@ -50,6 +50,7 @@ var view = {
             function(current, index){
                 let task = document.createElement('li');
                 let check = document.createElement('input');
+                task.setAttribute('title', 'Double click to edit');
                 task.appendChild(check).setAttribute("type", "checkbox");
                 check.className = 'check-task-button';
                 check.checked = current.done;
@@ -80,13 +81,6 @@ var view = {
         let checkAllButton = document.querySelector('.check-all-tasks-button');
         let isAllChecked = todoList.taskList.map(task => task.done).includes(false);
         checkAllButton.checked = (isAllChecked ? false : true);
-
-        // if (isAllChecked) {
-        //     checkAllButton.checked = false;
-        // }
-        // else {
-        //     checkAllButton.checked = true;
-        // }
     },
 
     setUpEventListeners: function() {
@@ -118,11 +112,20 @@ var view = {
             }
         });
 
+        todosUl.addEventListener('dblclick', function(event){
+            var elem = event.target;
+            if(elem.tagName === 'LI'){
+                handlers.changeTodo(elem.id);
+            }
+        });
+
         todosUl.addEventListener('keypress', function(key_pressed){
             if (key_pressed.key === 'Enter'){
                 handlers.addTodo();
             }
         });
+
+
     }
 
 }
@@ -136,6 +139,23 @@ var handlers = {
             addTodoTextInput.value = '';
             view.showTodos();
         }
+    },
+
+    changeTodo: function(id){
+        let currentTask = document.getElementById(id);
+        currentTask.firstChild.nextSibling.nodeValue = "";
+        let textInput = document.createElement('input');
+        textInput.setAttribute('type', 'text');
+        textInput.className = 'task-edit-box';
+        textInput.setAttribute('value', todoList.taskList[id].text);
+        currentTask.firstElementChild.insertAdjacentElement('afterend', textInput);
+        currentTaskEdit = currentTask.querySelector('.task-edit-box');
+        currentTaskEdit.focus();
+
+        currentTaskEdit.addEventListener('focusout', function(e){
+            todoList.changeTodo(id, currentTaskEdit.value);
+            view.showTodos();
+        })
     },
 
     delTodo: function(id){
