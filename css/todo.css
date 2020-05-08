@@ -118,6 +118,11 @@ svg.left {grid-column: 2/3;}
     align-items: center;
 }
 
+.main ul input.task-edit-box {
+    font-size: 1em;
+    width: 100%;
+}
+
 .main li {
     display: flex;
     align-items: center;
